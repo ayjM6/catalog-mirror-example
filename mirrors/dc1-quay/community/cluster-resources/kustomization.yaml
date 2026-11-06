@@ -1,7 +1,0 @@
-# Raw oc-mirror output. Don't edit; replace the whole directory.
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-resources:
-  - cc-community-operator-index-v4-22.yaml
-  - cs-community-operator-index-v4-22.yaml
-  - idms-oc-mirror.yaml

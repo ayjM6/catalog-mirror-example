@@ -1,0 +1,12 @@
+# Renames the ${INDEX_NAME} CatalogSource to ${CATALOG}.
+#
+# Targets oc-mirror's name, cs-${INDEX_NAME}-v<maj>-<min>. Target names are
+# whole-name matches, so a catalog derived from this one (e.g. one with a
+# suffix) isn't matched.
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+patches:
+  - target: {group: operators.coreos.com, kind: CatalogSource, name: cs-${INDEX_NAME}-v\d+-\d+}
+    options: {allowNameChange: true}
+    patch: |
+      - {op: replace, path: /metadata/name, value: ${CATALOG}}

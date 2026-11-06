@@ -1,0 +1,16 @@
+apiVersion: config.openshift.io/v1
+kind: ImageTagMirrorSet
+metadata:
+  annotations:
+    createdAt: Friday, 06-Nov-26 09:30:56 UTC
+    createdBy: oc-mirror v2
+    oc-mirror_version: 4.22.0-202609151747.p2.g739e138.assembly.stream.el9-739e138
+  name: itms-generic-0
+spec:
+  imageTagMirrors:
+    - mirrors:
+        - harbor.edge.example.com:8443/mirror/ocp/openshift4
+      source: registry.redhat.io/openshift4
+    - mirrors:
+        - harbor.edge.example.com:8443/mirror/ocp/ubi9
+      source: registry.redhat.io/ubi9

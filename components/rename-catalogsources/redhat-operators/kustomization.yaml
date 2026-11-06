@@ -1,0 +1,12 @@
+# Renames the redhat-operator-index CatalogSource to redhat-operators.
+#
+# Targets oc-mirror's name, cs-redhat-operator-index-v<maj>-<min>. Target names
+# are whole-name matches, so a catalog derived from this one (e.g. one ending in
+# -nmstate) isn't matched.
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+patches:
+  - target: {group: operators.coreos.com, kind: CatalogSource, name: cs-redhat-operator-index-v\d+-\d+}
+    options: {allowNameChange: true}
+    patch: |
+      - {op: replace, path: /metadata/name, value: redhat-operators}

@@ -6,4 +6,4 @@ resources:
   - ../../../mirrors/dc1-quay
 components:
   - ../../../components/ocp-version/4.22
-  - ../../../components/common   # must come after the version component
+  - ../../../components/common # must come after the version component

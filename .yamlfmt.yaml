@@ -1,0 +1,12 @@
+# yamlfmt settings for `just fmt`. examples/ is raw oc-mirror output and stays
+# as written. Templates contain ${...} placeholders that aren't valid YAML in
+# flow maps, so they're kept in this style by hand.
+formatter:
+  type: basic
+  retain_line_breaks_single: true
+exclude:
+  - examples
+  - scripts/templates
+  - target
+  - .idea
+  - .junie

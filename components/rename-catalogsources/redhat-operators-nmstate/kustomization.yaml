@@ -1,0 +1,14 @@
+# Renames the redhat-operator-index-nmstate CatalogSource to redhat-operators-nmstate.
+#
+# Targets oc-mirror's name, cs-redhat-operator-index-nmstate-v<maj>-<min>.
+# Target names are whole-name matches, so the redhat rule
+# (cs-redhat-operator-index-v<maj>-<min>) doesn't match this catalog.
+#
+# Not one of OpenShift's default catalogs, so it gets a name of its own.
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+patches:
+  - target: {group: operators.coreos.com, kind: CatalogSource, name: cs-redhat-operator-index-nmstate-v\d+-\d+}
+    options: {allowNameChange: true}
+    patch: |
+      - {op: replace, path: /metadata/name, value: redhat-operators-nmstate}

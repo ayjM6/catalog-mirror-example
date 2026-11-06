@@ -1,9 +1,8 @@
-# Every catalog mirrored to dc1-quay, plus the registry label.
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - community
-  - nmstate
-  - redhat
+  - community-operators
+  - redhat-operators
+  - redhat-operators-nmstate
 components:
   - ../../components/registries/dc1-quay

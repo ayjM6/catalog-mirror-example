@@ -1,0 +1,29 @@
+# Git hooks, installed with `just hooks`. Commands run in priority order.
+pre-commit:
+  piped: true
+  commands:
+    sort-mirror-sets:
+      priority: 1
+      glob: "mirrors/**/cluster-resources/{idms,itms}-*.yaml"
+      run: just sort {staged_files}
+      stage_fixed: true
+    generate:
+      # also when generated files or the scripts behind them change
+      priority: 2
+      glob:
+        - "mirrors/**"
+        - "scripts/**"
+        - "overlays/**"
+        - "components/ocp-version/**"
+        - "components/catalogs/**"
+        - "components/rename-catalogsources/**"
+      run: just generate
+    fmt:
+      # after sort-mirror-sets, so both leave the mirror sets the same way
+      priority: 3
+      glob: "*.{yaml,yml}"
+      exclude:
+        - "examples/**"
+        - "scripts/templates/**"
+      run: just fmt {staged_files}
+      stage_fixed: true
