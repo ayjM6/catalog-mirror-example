@@ -1,0 +1,7 @@
+# Every catalog mirrored to edge-harbor, plus the registry label.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - redhat
+components:
+  - ../../components/registries/edge-harbor

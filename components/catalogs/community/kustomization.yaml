@@ -1,0 +1,30 @@
+# Catalog community-operator-index.
+#
+# Included by every mirrors/<registry>/community/ wrapper. A wrapper only holds this
+# catalog's oc-mirror output, so the labels field and the kind-only targets
+# below affect nothing else.
+#
+# - Labels every object with the catalog. ClusterCatalogs keep oc-mirror's name;
+#   ClusterExtensions find them by these labels.
+# - Renames the mirror set (oc-mirror calls it idms-operator-0 in every run) to
+#   the catalog name, so catalogs sharing a registry don't collide.
+#
+# CatalogSources aren't renamed here: the wrapper holds one per OpenShift
+# version, and they'd all end up with the same name. That happens in the
+# overlay, once only one version is left (see rename-catalogsources).
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+labels:
+  - pairs:
+      catalogs.example.com/catalog: community-operator-index
+      catalogs.example.com/base-catalog: community-operator-index
+    includeSelectors: false
+patches:
+  - target: {group: config.openshift.io, kind: ImageDigestMirrorSet}
+    options: {allowNameChange: true}
+    patch: |
+      - {op: replace, path: /metadata/name, value: community-operator-index}
+  - target: {group: config.openshift.io, kind: ImageTagMirrorSet}
+    options: {allowNameChange: true}
+    patch: |
+      - {op: replace, path: /metadata/name, value: community-operator-index}

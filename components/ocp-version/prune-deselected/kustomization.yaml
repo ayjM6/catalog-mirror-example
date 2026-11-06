@@ -1,0 +1,18 @@
+# Removes what the version component left deselected. Runs from
+# components/common, after the version component and before the CatalogSource
+# renames. See README.md in this directory.
+#
+# 1. Deletes every CatalogSource still labelled ocp-selected=false.
+# 2. Removes the ocp-selected label from the rest.
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+patches:
+  - target: {group: operators.coreos.com, kind: CatalogSource, labelSelector: catalogs.example.com/ocp-selected=false}
+    patch: |
+      $patch: delete
+      apiVersion: operators.coreos.com/v1alpha1
+      kind: CatalogSource
+      metadata: {name: any}
+  - target: {group: operators.coreos.com, kind: CatalogSource, labelSelector: catalogs.example.com/ocp-selected}
+    patch: |
+      - {op: remove, path: /metadata/labels/catalogs.example.com~1ocp-selected}

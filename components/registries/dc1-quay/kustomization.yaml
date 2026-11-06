@@ -1,0 +1,9 @@
+# Registry dc1-quay: labels every catalog object with the registry it was mirrored
+# to. Included by mirrors/dc1-quay/kustomization.yaml, so OperatorHub/cluster (from
+# base/) doesn't get this label.
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+labels:
+  - pairs:
+      catalogs.example.com/registry: dc1-quay
+    includeSelectors: false

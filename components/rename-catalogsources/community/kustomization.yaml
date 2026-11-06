@@ -1,0 +1,13 @@
+# Renames the community-operator-index CatalogSource to community-operators.
+#
+# Targets oc-mirror's name, cs-community-operator-index-v<maj>-<min>. Target names
+# are whole-name matches, so a catalog derived from this one (e.g. one ending in
+# -nmstate) isn't matched.
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+patches:
+  - target: {group: operators.coreos.com, kind: CatalogSource, name: cs-community-operator-index-v\d+-\d+}
+    options: {allowNameChange: true}
+    patch: |
+      - {op: replace, path: /metadata/name, value: community-operators}
+      - {op: add, path: /spec/displayName, value: Community Operators}

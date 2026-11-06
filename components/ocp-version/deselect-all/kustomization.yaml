@@ -1,0 +1,21 @@
+# Switches every OpenShift version off. Included by each version component,
+# which then switches its own version back on. See README.md in this directory.
+#
+# - Every ClusterCatalog becomes Unavailable.
+# - Every versioned CatalogSource (name ends in -v<maj>-<min>) is labelled
+#   catalogs.example.com/ocp-selected=false, for prune-deselected to remove.
+#   CatalogSources without a version suffix are left alone.
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+patches:
+  - target: {group: olm.operatorframework.io, kind: ClusterCatalog, name: .*-v\d+-\d+}
+    patch: |
+      - {op: add, path: /spec/availabilityMode, value: Unavailable}
+  - target: {group: operators.coreos.com, kind: CatalogSource, name: .*-v\d+-\d+}
+    patch: |
+      apiVersion: operators.coreos.com/v1alpha1
+      kind: CatalogSource
+      metadata:
+        name: any
+        labels:
+          catalogs.example.com/ocp-selected: "false"

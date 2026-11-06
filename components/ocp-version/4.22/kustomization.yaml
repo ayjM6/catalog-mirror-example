@@ -1,0 +1,18 @@
+# Selects OpenShift 4.22. See components/ocp-version/README.md.
+#
+# deselect-all runs first and switches every version off; the patches below
+# switch 4.22 back on. Also labels every object with the version.
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+labels:
+  - pairs:
+      catalogs.example.com/ocp-version: "4.22"
+components:
+  - ../deselect-all
+patches:
+  - target: {group: olm.operatorframework.io, kind: ClusterCatalog, name: .*-v4-22}
+    patch: |
+      - {op: add, path: /spec/availabilityMode, value: Available}
+  - target: {group: operators.coreos.com, kind: CatalogSource, name: .*-v4-22}
+    patch: |
+      - {op: replace, path: /metadata/labels/catalogs.example.com~1ocp-selected, value: "true"}

@@ -1,0 +1,18 @@
+# Steps every overlay runs once its OpenShift version has been selected.
+#
+# Must be listed AFTER the version component in every overlay:
+#   components:
+#     - ../../../components/ocp-version/<version>
+#     - ../../../components/common
+#
+# Runs, in order:
+# 1. ocp-version/prune-deselected: removes the other versions' CatalogSources.
+# 2. rename-catalogsources: renames the one CatalogSource left per catalog.
+#
+# Don't add anything that changes ClusterCatalog availability: it would undo the
+# version component's selection.
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+components:
+  - ../ocp-version/prune-deselected
+  - ../rename-catalogsources

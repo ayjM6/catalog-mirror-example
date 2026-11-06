@@ -1,0 +1,12 @@
+# Renames each catalog's CatalogSource to a stable name; Subscriptions refer to
+# CatalogSources by name, so these names must never change.
+#
+# Runs from components/common, after the overlay's version component has
+# removed every other version, so only one CatalogSource per catalog is left.
+# One sub-component per catalog; a catalog missing from an overlay is a no-op.
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+components:
+  - community
+  - nmstate
+  - redhat

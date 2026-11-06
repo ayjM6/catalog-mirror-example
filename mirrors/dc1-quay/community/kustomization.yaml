@@ -1,0 +1,7 @@
+# Catalog community on dc1-quay: wraps the raw oc-mirror output in cluster-resources/.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - cluster-resources
+components:
+  - ../../../components/catalogs/community

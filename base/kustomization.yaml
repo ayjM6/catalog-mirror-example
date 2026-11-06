@@ -1,0 +1,9 @@
+# Resources every overlay needs, whatever the OpenShift version or registry.
+#
+# OperatorHub/cluster turns off OpenShift's default catalog sources: they point
+# at registries a disconnected cluster can't reach, and the mirrored
+# CatalogSources take over their names (redhat-operators, ...).
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - operatorhub.yaml
