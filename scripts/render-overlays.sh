@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # Builds every overlay with kustomize and writes the result to target/, one file
 # per object, in the same tree as overlays/:
-#   overlays/4.22/dc1-quay  ->  target/4.22/dc1-quay/<kind>-<name>.yaml
-# e.g. target/4.22/dc1-quay/catalogsource-redhat-operators.yaml
+#   overlays/4.22/registry-a  ->  target/4.22/registry-a/<kind>-<name>.yaml
+# e.g. target/4.22/registry-a/catalogsource-redhat-operators.yaml
 #
 # target/ is git-ignored. Run `just clean` first to clear out old files
 # (`just build` does).

@@ -19,10 +19,10 @@ The files in `mirrors/<registry>/<catalog>/cluster-resources/` are these files, 
 `just build` has also sorted their mirror-set entries and formatted them (see "Why mirror sets are sorted" in the top-level README).
 The files here keep oc-mirror's order and layout, so they show what oc-mirror really writes.
 
-| Registry      | Prefix                                    | Catalogs                                                              |
-|---------------|-------------------------------------------|-----------------------------------------------------------------------|
-| `dc1-quay`    | `quay.dc1.example.com/ocp4`               | `redhat-operators`, `community-operators`, `redhat-operators-nmstate` |
-| `edge-harbor` | `harbor.edge.example.com:8443/mirror/ocp` | `redhat-operators`                                                    |
+| Registry     | Prefix                                   | Catalogs                                                              |
+|--------------|------------------------------------------|-----------------------------------------------------------------------|
+| `registry-a` | `registry-a.example.com/ocp4`            | `redhat-operators`, `community-operators`, `redhat-operators-nmstate` |
+| `registry-b` | `registry-b.example.com:8443/mirror/ocp` | `redhat-operators`                                                    |
 
 ## Splitting one operator into its own catalog (`redhat-operators-nmstate`)
 

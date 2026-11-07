@@ -1,0 +1,9 @@
+# Registry registry-b: labels every catalog object with the registry it was mirrored
+# to. Included by mirrors/registry-b/kustomization.yaml, so OperatorHub/cluster (from
+# base/) doesn't get this label.
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+labels:
+  - pairs:
+      catalogs.example.com/registry: registry-b
+    includeSelectors: false

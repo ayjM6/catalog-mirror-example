@@ -36,14 +36,14 @@ The result is one overlay per OpenShift version and registry, which is what a cl
 
 ```
 mirrors/
-  dc1-quay/                         one directory per mirror registry
+  registry-a/                       one directory per mirror registry
     kustomization.yaml              combines the registry's catalogs
     redhat-operators/               one directory per catalog (oc-mirror run), named after its CatalogSource
       kustomization.yaml            applies the catalog's component to cluster-resources/
       cluster-resources/            oc-mirror output
     community-operators/
     redhat-operators-nmstate/
-  edge-harbor/
+  registry-b/
     redhat-operators/
 
 components/
@@ -56,7 +56,7 @@ components/
 base/                               OperatorHub/cluster: turns off the default online catalogs
 
 overlays/<version>/<registry>/      what a cluster deploys (generated)
-  4.21/dc1-quay  4.22/dc1-quay  4.21/edge-harbor  4.22/edge-harbor
+  4.21/registry-a  4.22/registry-a  4.21/registry-b  4.22/registry-b
 
 examples/                           the oc-mirror runs behind mirrors/
 
@@ -81,8 +81,8 @@ It also creates `components/catalogs/<catalog>/` and `components/rename-catalogs
 To update a catalog, replace the whole directory with oc-mirror's:
 
 ```bash
-rm -rf mirrors/dc1-quay/redhat-operators/cluster-resources
-cp -r <oc-mirror-workspace>/working-dir/cluster-resources mirrors/dc1-quay/redhat-operators/
+rm -rf mirrors/registry-a/redhat-operators/cluster-resources
+cp -r <oc-mirror-workspace>/working-dir/cluster-resources mirrors/registry-a/redhat-operators/
 ```
 
 Then run `just build`.
@@ -150,7 +150,7 @@ The names and labels are set in `components/catalogs/<catalog>` and `components/
 
 After that, `just build` never changes them.
 
-A catalog directory with the same name on several registries (e.g. `redhat-operators` on both `dc1-quay` and `edge-harbor`) is assumed to hold the same index.
+A catalog directory with the same name on several registries (e.g. `redhat-operators` on both `registry-a` and `registry-b`) is assumed to hold the same index.
 Its components are created from whichever copy `just build` finds first.
 They're kept separate from the oc-mirror output on purpose: clusters depend on them, so they should change only when someone decides to change them, never as a side effect of a mirror run.
 Those components are also where to set anything else oc-mirror leaves at its default, such as catalog priority.
@@ -160,7 +160,7 @@ Those components are also where to set anything else oc-mirror leaves at its def
 ### Upgrade a cluster to a new OpenShift version
 
 1. Upgrade the cluster.
-2. Point it at the next overlay, e.g. from `overlays/4.21/dc1-quay` to `overlays/4.22/dc1-quay`.
+2. Point it at the next overlay, e.g. from `overlays/4.21/registry-a` to `overlays/4.22/registry-a`.
 
 The CatalogSource keeps its name; only its image changes.
 ClusterCatalogs aren't created or deleted: the old version's becomes `Unavailable` and the new one's `Available`.
@@ -182,9 +182,9 @@ For example, 4.23:
 
 ### Add a catalog
 
-For example, certified operators on `dc1-quay`:
+For example, certified operators on `registry-a`:
 
-1. Mirror it into `mirrors/dc1-quay/certified-operators/cluster-resources/`.
+1. Mirror it into `mirrors/registry-a/certified-operators/cluster-resources/`.
    The directory name becomes the CatalogSource's name on clusters, so choose it with care.
 2. Run `just build`.
    It creates `components/catalogs/certified-operators` and `components/rename-catalogsources/certified-operators`, and adds the catalog to the registry and its overlays.
@@ -194,7 +194,7 @@ For example, certified operators on `dc1-quay`:
 ### Add a registry
 
 1. Create `mirrors/<registry>/` with a directory per catalog, as above.
-2. Copy `components/registries/dc1-quay` to `components/registries/<registry>`, and change the label.
+2. Copy `components/registries/registry-a` to `components/registries/<registry>`, and change the label.
    If you skip this, `just build` warns and leaves the registry label off.
 3. Run `just build` to create its kustomizations and `overlays/<version>/<registry>/`.
 

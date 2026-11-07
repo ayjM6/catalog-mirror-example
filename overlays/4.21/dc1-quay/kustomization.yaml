@@ -1,9 +1,0 @@
-# OpenShift 4.21 on dc1-quay.
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-resources:
-  - ../../../base
-  - ../../../mirrors/dc1-quay
-components:
-  - ../../../components/ocp-version/4.21
-  - ../../../components/common # must come after the version component

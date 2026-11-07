@@ -9,7 +9,7 @@ This file covers what you need in order to change things safely.
 An **example** kustomize layout for storing oc-mirror v2 output in Git and rolling the mirrored operator catalogs out to disconnected OpenShift clusters.
 There is no application code and no CI.
 Everything is kustomize YAML plus Markdown, with a few bash scripts (run through `just`) that generate the version components and overlays, sort mirror sets and format YAML.
-The registries (`dc1-quay`, `edge-harbor`), hostnames and catalog choice are made up.
+The registries (`registry-a`, `registry-b`), hostnames and catalog choice are made up.
 The oc-mirror output under `examples/` is real, except `examples/redhat-operators/cluster-resources/itms-oc-mirror.yaml`, which is hand-written (see `examples/README.md`).
 
 ## Layout
@@ -51,7 +51,7 @@ After that they're hand-maintained and never regenerated.
    They are oc-mirror output.
    `examples/` is kept byte-for-byte.
    In `mirrors/` there are exactly three differences, and nothing else:
-   - the registry prefix `localhost:5000/ocp4` is replaced with the example registry's (`quay.dc1.example.com/ocp4`, `harbor.edge.example.com:8443/mirror/ocp`)
+   - the registry prefix `localhost:5000/ocp4` is replaced with the example registry's (`registry-a.example.com/ocp4`, `registry-b.example.com:8443/mirror/ocp`)
    - mirror-set entries are sorted by `source` (`just sort`)
    - files are formatted by yamlfmt (`just fmt`)
 
